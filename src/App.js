@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import 'antd/dist/antd.css';
+import {
+  BrowserRouter as Router,
+
+  Route, Switch
+} from "react-router-dom";
 import './App.css';
+import Home from "./pages/Home";
+import List from './pages/ListData/List';
+import Login from "./pages/Login";
+import Pokemon from './pages/Pokemon/Pokemon';
+import Signup from "./pages/Signup";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Router>
+       <Switch>
+       <Route path="/pokemon">
+            <Pokemon/>
+          </Route>
+       <Route path="/listdata">
+            <List/>
+          </Route>
+          <Route path="/login">
+            <Login/>
+          </Route> 
+          <Route path="/signup">
+            <Signup/>
+          </Route>
+         <Route  path="/">
+            <Home/>
+          </Route>
+        </Switch>
+   </Router>
   );
 }
 
