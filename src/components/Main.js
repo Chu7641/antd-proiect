@@ -56,12 +56,12 @@ function Main(props) {
         </Sider>
 
         <Layout className="site-layout">
-          {/* <Header className="site-layout-background" style={{ padding: 0 }}>
+          <Header className="site-layout-background" style={{ padding: 0 }}>
             {React.createElement({ collapsed } ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger', onClick: handleToggle
             })}
             <Avatar style={{ backgroundColor: '#87d068', float: 'right', margin: 20 }} icon={<UserOutlined />} />
-          </Header> */}
+          </Header>
           <Content
             className="site-layout-background"
             style={{

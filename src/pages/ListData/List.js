@@ -50,7 +50,7 @@ function List(props) {
         } fletchData();
         return () => {
         }
-    }, [deleting, reload])
+    }, [ reload])
 
     const onCloseModal = () => {
         setModal(false);
@@ -69,22 +69,14 @@ function List(props) {
     async function removeItem(item) {
         console.log(item);
         setLoading(true)
-        axios.delete(`https://jsonplaceholder.typicode.com/users/${item.id}`, {
-        })
-            .then(function (response) {
-                setLoading(false)
-                console.log(response);
-                const index = items.findIndex(x => x.id === item.id)
-                const newData = [...items];
-                newData.splice(index, 1);
-                setItems(newData);
-                setDeleting(true);
-                message.info(`Đã xóa ${item.name}`)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
+        await userApi.deleteId(item.id)
+          setLoading(false)
+          // const index = items.findIndex(x => x.id === item.id)
+          // const newData = [...items];
+          // newData.splice(index, 1);
+          // setItems(newData);
+          setDeleting(true);
+          message.info(`Đã xóa ${item.name}`)
     }
   
      // search

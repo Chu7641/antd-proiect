@@ -9,9 +9,13 @@ const userApi={
         const url=`/users/${id}`;
         return axiosClient.delete(url);
     },
-    updateId:(id)=>{
+    updateId:(id,data)=>{
         const url=`/users/${id}`;
-        return axiosClient.patch(url);
+        return axiosClient.patch(url,data);
+    },
+    create : (data) => {
+        const url=`/users`;
+        return axiosClient.post(url,data);
     }
 }
 
