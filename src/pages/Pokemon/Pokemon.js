@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, Input, message, Popconfirm, Space, Table } from 'antd';
 import pokemonApi from '../../api/pokemonApi';
 import PokemonForm from './PokemonForm';
+import './Pokemon.css'
 
 
 
@@ -31,21 +32,42 @@ function Pokemon(props) {
             const response = await pokemonApi.getAll();
             console.log(response.results);
             setPokemon(response.results);
-            setTotal(response.count)
+            setTotal(response.count);
             setLoading(false)
         } catch (error) {
             console.error(error);
             setLoading(false);
         }
     }
-    const getPokemon =async(id)=>{
+    // const handleOpenModal = async (id) => {
+
+    //     setLoading(true);
+    //     getPokemon(id);
+    //     console.log(item);
+    //     setLoading(false);
+    //     setmodal(true);
+
+
+
+    // }
+    const goToPage = (url) => {
+        window.open(
+            url,
+            '_blank' // <- This is what makes it open in a new window.
+          );
+    }
+    const getPokemon = async (url) => {
         try {
-            const response = await axios.get(id);
+            const response = await axios.get(url);
             console.log(response);
-            setItem(response)
-          } catch (error) {
+            setItem(response);
+            setLoading(true);
+            console.log(item);
+            setLoading(false);
+            setmodal(true);
+        } catch (error) {
             console.error(error);
-          }
+        }
     }
 
     const columns = [
@@ -60,7 +82,7 @@ function Pokemon(props) {
             title: 'Url',
             dataIndex: 'url',
             key: 'url',
-            render: text => <a>{text}</a>,
+            render: text => <a onClick={() => goToPage(text)} >{text}</a>,
             // ...getColumnSearchProps('username'),
 
         },
@@ -70,11 +92,11 @@ function Pokemon(props) {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a onClick={() => handleOpenModal(record.url)}>Infor</a>
-                    <Popconfirm title="Are you sure？"
+                    <a className='infor' onClick={() => getPokemon(record.url)}>Infor</a>
+                    {/* <Popconfirm title="Are you sure？"
                         okText="Yes" cancelText="No">
                         <a  >Delete</a>
-                    </Popconfirm>
+                    </Popconfirm> */}
 
                 </Space>
             ),
@@ -109,26 +131,8 @@ function Pokemon(props) {
     const handleOnClose = () => {
         setmodal(false);
     }
-    // const getPokemon=async(url)=>{
-    //     try {
-    //         const response = await axios.get(url);
-    //         // console.log(response);
-    //         setItem(response)
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    // }
-    const handleOpenModal = async(id) => {
-        
-            setLoading(true);
-            await getPokemon(id);
-            await console.log(item);
-            setLoading(false);
-            setmodal(true);
-           
-       
 
-    }
+
 
     return (
         <Main active='4'>
@@ -141,11 +145,13 @@ function Pokemon(props) {
                 columns={columns}
             ></Table>
 
-            <PokemonForm
+            {modal ? <PokemonForm
                 open={modal}
                 onClose={handleOnClose}
                 currentPokemon={item}
             />
+                : null}
+
         </Main>
     );
 }

@@ -228,7 +228,7 @@ function List(props) {
             />
             {modal ?
                 <EditForm open={modal} onClose={onCloseModal} onReload={onReload} currentData={item} />
-                : null}
+           : null}
                 
         </Main>
     );
