@@ -48,3 +48,10 @@
 .ant-form{
   margin: 5rem auto !important;
 }
+
+/* cart pokemon */
+
+.cart-pokemon{
+  float: right;
+  margin: 0 40px;
+}

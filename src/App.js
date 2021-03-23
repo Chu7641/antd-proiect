@@ -5,6 +5,7 @@ import {
   Route, Switch
 } from "react-router-dom";
 import './App.css';
+import PokemonCart from './pages/Cart/PokemonCart';
 import Home from "./pages/Home";
 import List from './pages/ListData/List';
 import Login from "./pages/Login";
@@ -28,7 +29,7 @@ function App() {
             <Signup/>
           </Route>
          <Route  path="/">
-            <Home/>
+           <Home/>
           </Route>
         </Switch>
    </Router>

@@ -93,11 +93,7 @@ function Pokemon(props) {
             render: (text, record) => (
                 <Space size="middle">
                     <a className='infor' onClick={() => getPokemon(record.url)}>Infor</a>
-                    {/* <Popconfirm title="Are you sure？"
-                        okText="Yes" cancelText="No">
-                        <a  >Delete</a>
-                    </Popconfirm> */}
-
+                    <a className='select-pokemon' >Select</a>
                 </Space>
             ),
         },
@@ -109,7 +105,7 @@ function Pokemon(props) {
             setLoading(true)
             const parram = {
                 offset: pagination.pageSize * (pagination.current - 1),
-                limit: 20
+                limit: 10
             }
             const response = await pokemonApi.getAll(parram);
             setPokemon(response.results);
@@ -138,8 +134,8 @@ function Pokemon(props) {
         <Main active='4'>
             <Table
                 onChange={onChangeTable}
-                pagination={{ pageSize: 20, total: total, showSizeChanger: false }}
-                scroll={{ y: 590 }}
+                pagination={{ pageSize: 10, total: total, showSizeChanger: false }}
+                // scroll={{ y: 590 }}
                 loading={loading}
                 dataSource={pokemons}
                 columns={columns}

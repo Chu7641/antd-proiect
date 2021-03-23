@@ -1,9 +1,9 @@
 import {
   HomeOutlined,
   LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
-  UnorderedListOutlined, UserOutlined
+  UnorderedListOutlined, UserOutlined, ShoppingCartOutlined
 } from '@ant-design/icons';
-import { Avatar, Layout, Menu } from 'antd';
+import { Avatar, Layout, Badge, Menu } from 'antd';
 import React, { useState } from 'react';
 import { useCookies } from "react-cookie";
 import { useHistory } from 'react-router';
@@ -16,7 +16,7 @@ function Main(props) {
   const [cookies, setCookie] = useCookies(['access_token', 'user_info', 'user_name']);
   let history = useHistory();
   const [collapsed, setCoolapsed] = useState(false);
-  const { active } = props;
+  const { active,count } = props;
 
   function handleToggle() {
     setCoolapsed(!collapsed)
@@ -30,7 +30,7 @@ function Main(props) {
   const goToHome = () => {
     history.push("/home")
   }
-  const goToPokemon=()=>{
+  const goToPokemon = () => {
     history.push("/pokemon")
   }
 
@@ -46,7 +46,7 @@ function Main(props) {
             <Menu.Item key="2" icon={<UnorderedListOutlined />} onClick={goToListData}>
               List Data
           </Menu.Item>
-          <Menu.Item key="4" icon={<UnorderedListOutlined />} onClick={goToPokemon}>
+            <Menu.Item key="4" icon={<UnorderedListOutlined />} onClick={goToPokemon}>
               Pokemon
           </Menu.Item>
             <Menu.Item key="3" icon={<LogoutOutlined />} onClick={goToLogin} >
@@ -60,7 +60,9 @@ function Main(props) {
             {React.createElement({ collapsed } ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger', onClick: handleToggle
             })}
-            <Avatar style={{ backgroundColor: '#87d068', float: 'right', margin: 20 }} icon={<UserOutlined />} />
+            <div className='cart-pokemon'> <Badge count={count}>
+              <a><Avatar style={{ backgroundColor: '#87d068' }} icon={<ShoppingCartOutlined />} /></a>
+            </Badge></div>
           </Header>
           <Content
             className="site-layout-background"
