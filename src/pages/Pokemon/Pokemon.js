@@ -6,6 +6,7 @@ import { Button, Input, message, Popconfirm, Space, Table } from 'antd';
 import pokemonApi from '../../api/pokemonApi';
 import PokemonForm from './PokemonForm';
 import './Pokemon.css'
+import Search from 'antd/lib/input/Search';
 
 
 
@@ -21,6 +22,10 @@ function Pokemon(props) {
     const [total, setTotal] = useState();
     const [modal, setmodal] = useState(false);
     const [item, setItem] = useState();
+    const [filter,setFilter]=useState();
+
+
+    
     useEffect(() => {
         fetchData();
         // getPokemon();
@@ -51,18 +56,32 @@ function Pokemon(props) {
 
     // }
     const goToPage = (url) => {
+        // console.log(url);
+        let link= `https://www.pokemon.com/us/pokedex/${url.name}`
+        // console.log(link);
         window.open(
-            url,
+            link,
             '_blank' // <- This is what makes it open in a new window.
           );
     }
+    const onSearch=async(value)=>{
+        setLoading(true);
+        console.log(value);
+        setFilter(value);
+        const poke=await pokemonApi.getPokemonId(value);
+        console.log(poke);
+        setItem(poke); 
+        setmodal(true);
+        setLoading(false);
+
+
+    }
     const getPokemon = async (url) => {
         try {
+            setLoading(true);
             const response = await axios.get(url);
             console.log(response);
-            setItem(response);
-            setLoading(true);
-            console.log(item);
+            setItem(response.data); 
             setLoading(false);
             setmodal(true);
         } catch (error) {
@@ -82,7 +101,7 @@ function Pokemon(props) {
             title: 'Url',
             dataIndex: 'url',
             key: 'url',
-            render: text => <a onClick={() => goToPage(text)} >{text}</a>,
+            render: (text, record) => <a onClick={() => goToPage(record)} >Go to {record.name} US Pokedex</a>,
             // ...getColumnSearchProps('username'),
 
         },
@@ -128,10 +147,16 @@ function Pokemon(props) {
         setmodal(false);
     }
 
+    
 
 
+    
     return (
         <Main active='4'>
+            <div className='search-bar'>
+            <Search  placeholder="Name or Number" onSearch={onSearch} enterButton />
+            </div>
+
             <Table
                 onChange={onChangeTable}
                 pagination={{ pageSize: 10, total: total, showSizeChanger: false }}
@@ -141,7 +166,8 @@ function Pokemon(props) {
                 columns={columns}
             ></Table>
 
-            {modal ? <PokemonForm
+            {modal ? <PokemonForm 
+                loading={loading}
                 open={modal}
                 onClose={handleOnClose}
                 currentPokemon={item}

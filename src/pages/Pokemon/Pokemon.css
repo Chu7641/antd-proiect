@@ -5,3 +5,7 @@
     border-radius: 10px;
     font-weight:600 !important;
 }
+.search-bar{
+    width: 30rem;
+    margin: 2rem;
+}

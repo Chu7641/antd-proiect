@@ -9,7 +9,7 @@ const userApi={
     },
     getPokemonId:(id)=>{
         const url=`/pokemon/${id}`;
-        return axiosClient.get(url,{id})
+        return axiosClientPkm.get(url,{id})
     }
     // deleteId:(id)=>{
     //     const url=`/pokemon/${id}`;
